@@ -1,5 +1,6 @@
+
 const Role = require('../models/role');
-const Usuario = require('../models/usuarios')
+const {Usuario,Categoria, Producto} = require('../models')
 
 
 
@@ -29,8 +30,48 @@ const existeUsuarioPorID = async( id ) => {
     }
 };
 
+const existeCategoriaPorID = async( id ) => {
+    
+    const existeID = await Categoria.findById( id );
+
+    if(!existeID){
+        throw new Error(`El  ${id} no existe` )
+    }
+};
+
+
+const existeProductoPorID = async( id ) => {
+    
+    const existeID = await Producto.findById( id );
+
+    if(!existeID){
+        throw new Error(`El   ${id} no existe` )
+    }
+};
+
+
+/**
+ * Validar colecciones permitidas
+ * 
+ */
+
+
+const coleccionesPermitidas = ( coleccion = '', colecciones = []) => {
+
+
+    const incluida = colecciones.includes( coleccion );
+    if ( !incluida ) {
+        throw new Error(`La coleccion ${coleccion} no es permitida - ${colecciones}`)
+    }  
+
+    return true;
+}
+
 module.exports = {
     esRolValido,
     emailExiste,
-    existeUsuarioPorID
+    existeUsuarioPorID,
+    existeCategoriaPorID,
+    existeProductoPorID,
+    coleccionesPermitidas
 }

@@ -102,19 +102,30 @@ const usuariosPost =  async(req, res) => {
       
     const {id} = req.params;
 
+    
+
     //borrado fisico
     //const usuario = await Usuario.findByIdAndDelete( id );
     //borrado logico
     const usuario = await Usuario.findByIdAndUpdate( id, {estado:false}, {new:true} );
-     
+    
+    
+   
+    //usuario autenticado
+    const usuarioAutenticado = req.usuario;
+
 
 
     res.json({
         
-       usuario
+       usuario,
+
+       usuarioAutenticado
 
     });
 }
+
+
 
 
 
